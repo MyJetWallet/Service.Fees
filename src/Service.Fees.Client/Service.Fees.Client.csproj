@@ -5,9 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Domain.Models\Service.Fees.Domain.Models.csproj" />
-        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Grpc\Service.Fees.Grpc.csproj" />
-        <ProjectReference Include="..\Service.Fees.MyNoSql\Service.Fees.MyNoSql.csproj" />
+        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Domain.Models\Service.Fees.Domain.Models.csproj"/>
+        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Grpc\Service.Fees.Grpc.csproj"/>
+        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.MyNoSql\Service.Fees.MyNoSql.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
