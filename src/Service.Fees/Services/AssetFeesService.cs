@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Domain.Assets;
+using MyJetWallet.Sdk.Service;
 using MyNoSqlServer.Abstractions;
 using Newtonsoft.Json;
 using Service.AssetsDictionary.Client;
@@ -32,6 +33,10 @@ namespace Service.Fees.Services
 
         public async Task<FeesResponse<AssetFees>> SetAssetFeesAsync(AssetFees assetFees)
         {
+            assetFees.BrokerId.AddToActivityAsTag("brokerId");
+            assetFees.WalletId.AddToActivityAsTag("walletId");
+            assetFees.AccountId.AddToActivityAsTag("clientId");
+
             _logger.LogInformation("Receive SetAssetFeesAsync request: {jsonText}",
                 JsonConvert.SerializeObject(assetFees));
 

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Domain.Assets;
+using MyJetWallet.Sdk.Service;
 using MyNoSqlServer.Abstractions;
 using Newtonsoft.Json;
 using Service.AssetsDictionary.Client;
@@ -33,35 +34,38 @@ namespace Service.Fees.Services
         public async Task<FeesResponse<SpotInstrumentFees>> SetSpotInstrumentFeesAsync(
             SpotInstrumentFees spotInstrumentFees)
         {
-            {
-                _logger.LogInformation("Receive SetSpotInstrumentFeesAsync request: {jsonText}",
-                    JsonConvert.SerializeObject(spotInstrumentFees));
+            spotInstrumentFees.BrokerId.AddToActivityAsTag("brokerId");
+            spotInstrumentFees.WalletId.AddToActivityAsTag("walletId");
+            spotInstrumentFees.AccountId.AddToActivityAsTag("clientId");
 
-                if (string.IsNullOrEmpty(spotInstrumentFees.BrokerId))
-                    return FeesResponse<SpotInstrumentFees>.Error(
-                        "Cannot create/update spot instrument fees. BrokerId cannot be empty");
-                if (string.IsNullOrEmpty(spotInstrumentFees.SpotInstrumentId))
-                    return FeesResponse<SpotInstrumentFees>.Error(
-                        "Cannot create/update spot instrument fees. SpotInstrumentId cannot be empty");
+            _logger.LogInformation("Receive SetSpotInstrumentFeesAsync request: {jsonText}",
+                JsonConvert.SerializeObject(spotInstrumentFees));
 
-                var instrument = _spotInstrumentDictionaryClient.GetSpotInstrumentById(new SpotInstrumentIdentity()
-                    {BrokerId = spotInstrumentFees.BrokerId, Symbol = spotInstrumentFees.SpotInstrumentId});
+            if (string.IsNullOrEmpty(spotInstrumentFees.BrokerId))
+                return FeesResponse<SpotInstrumentFees>.Error(
+                    "Cannot create/update spot instrument fees. BrokerId cannot be empty");
+            if (string.IsNullOrEmpty(spotInstrumentFees.SpotInstrumentId))
+                return FeesResponse<SpotInstrumentFees>.Error(
+                    "Cannot create/update spot instrument fees. SpotInstrumentId cannot be empty");
 
-                if (instrument == null)
-                    return FeesResponse<SpotInstrumentFees>.Error(
-                        "Cannot create spot instrument fees. Spot instrument do not found");
+            var instrument = _spotInstrumentDictionaryClient.GetSpotInstrumentById(new SpotInstrumentIdentity()
+                {BrokerId = spotInstrumentFees.BrokerId, Symbol = spotInstrumentFees.SpotInstrumentId});
 
-                var entity = SpotInstrumentFeesNoSqlEntity.Create(spotInstrumentFees);
+            if (instrument == null)
+                return FeesResponse<SpotInstrumentFees>.Error(
+                    "Cannot create spot instrument fees. Spot instrument do not found");
 
-                await _writer.InsertOrReplaceAsync(entity);
+            var entity = SpotInstrumentFeesNoSqlEntity.Create(spotInstrumentFees);
 
-                _logger.LogInformation(
-                    "Spot Instrument fees are created. BrokerId: {brokerId}, Spot Instrument: {spotInstrument}",
-                    entity.BrokerId,
-                    entity.SpotInstrumentId);
+            await _writer.InsertOrReplaceAsync(entity);
 
-                return FeesResponse<SpotInstrumentFees>.Success(SpotInstrumentFees.Create(entity.SpotInstrumentFees));
-            }
+            _logger.LogInformation(
+                "Spot Instrument fees are created. BrokerId: {brokerId}, Spot Instrument: {spotInstrument}",
+                entity.BrokerId,
+                entity.SpotInstrumentId);
+
+            return FeesResponse<SpotInstrumentFees>.Success(SpotInstrumentFees.Create(entity.SpotInstrumentFees));
+            
         }
 
         public async Task<NullableValue<SpotInstrumentFees>> GetSpotInstrumentFeesAsync(

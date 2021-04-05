@@ -12,5 +12,8 @@ namespace Service.Fees.Settings
 
         [YamlProperty("Fees.MyNoSqlReaderHostPort")]
         public string MyNoSqlReaderHostPort { get; set; }
+
+        [YamlProperty("Fees.ZipkinUrl")]
+        public string ZipkinUrl { get; set; }
     }
 }
