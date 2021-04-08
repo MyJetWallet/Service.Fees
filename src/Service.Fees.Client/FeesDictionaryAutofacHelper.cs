@@ -10,7 +10,7 @@ namespace Service.Fees.Client
         /// Register interface:
         ///   * IFeesSettingsClient
         /// </summary>
-        public static void RegisterAssetPaymentSettingsClients(this ContainerBuilder builder,
+        public static void RegisterFeesClients(this ContainerBuilder builder,
             IMyNoSqlSubscriber myNoSqlSubscriber)
         {
             var subs = new MyNoSqlReadRepository<FeesSettingsNoSqlEntity>(myNoSqlSubscriber,
