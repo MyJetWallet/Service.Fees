@@ -5,20 +5,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Domain.Models\Service.Fees.Domain.Models.csproj"/>
-        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Grpc\Service.Fees.Grpc.csproj"/>
-        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.MyNoSql\Service.Fees.MyNoSql.csproj"/>
+        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Domain.Models\Service.Fees.Domain.Models.csproj" />
+        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.Grpc\Service.Fees.Grpc.csproj" />
+        <ProjectReference PrivateAssets="All" Include="..\Service.Fees.MyNoSql\Service.Fees.MyNoSql.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.1.0"/>
-        <PackageReference Include="Grpc.Core.Api" Version="2.37.0"/>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.1.0"/>
-        <PackageReference Include="Grpc.Net.Client" Version="2.36.0"/>
-        <PackageReference Include="MyJetWallet.Sdk.GrpcMetrics" Version="2.0.0"/>
-        <PackageReference Include="MyNoSqlServer.DataReader" Version="1.3.1"/>
-        <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1"/>
-        <PackageReference Include="protobuf-net.Grpc" Version="1.0.152"/>
+        <PackageReference Include="Autofac" Version="6.1.0" />
+        <PackageReference Include="Grpc.Core.Api" Version="2.37.0" />
+        <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.37.0" />
+        <PackageReference Include="MyJetWallet.Sdk.GrpcMetrics" Version="2.0.0" />
+        <PackageReference Include="MyNoSqlServer.DataReader" Version="1.3.1" />
+        <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
+        <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" />
     </ItemGroup>
 
     <PropertyGroup>

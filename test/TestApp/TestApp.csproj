@@ -6,13 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.Net.Client" Version="2.36.0"/>
-        <PackageReference Include="protobuf-net.Grpc" Version="1.0.152"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.37.0" />
+        <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Service.Fees.Client\Service.Fees.Client.csproj"/>
-        <ProjectReference Include="..\..\src\Service.Fees.Grpc\Service.Fees.Grpc.csproj"/>
+        <ProjectReference Include="..\..\src\Service.Fees.Client\Service.Fees.Client.csproj" />
+        <ProjectReference Include="..\..\src\Service.Fees.Grpc\Service.Fees.Grpc.csproj" />
     </ItemGroup>
 
 </Project>
