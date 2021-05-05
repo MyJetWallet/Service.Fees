@@ -1,5 +1,4 @@
-﻿using Autofac;
-using MyNoSqlServer.DataReader;
+﻿using MyNoSqlServer.DataReader;
 using Service.Fees.MyNoSql;
 
 namespace Service.Fees.Client
@@ -10,7 +9,7 @@ namespace Service.Fees.Client
         /// Register interface:
         ///   * IFeesSettingsClient
         /// </summary>
-        public static void RegisterFeesClients(this ContainerBuilder builder,
+        public static void RegisterAssetFeesClients(this ContainerBuilder builder,
             IMyNoSqlSubscriber myNoSqlSubscriber)
         {
             var subs = new MyNoSqlReadRepository<AssetFeesNoSqlEntity>(myNoSqlSubscriber,
