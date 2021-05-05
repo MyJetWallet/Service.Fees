@@ -1,4 +1,5 @@
-﻿using MyNoSqlServer.DataReader;
+﻿using Autofac;
+using MyNoSqlServer.DataReader;
 using Service.Fees.MyNoSql;
 
 namespace Service.Fees.Client
