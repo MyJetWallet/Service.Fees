@@ -4,7 +4,7 @@ using Service.Fees.MyNoSql;
 
 namespace Service.Fees.Client
 {
-    public static class FeesDictionaryAutofacHelper
+    public static class SpotInstrumentFeesDictionaryAutofacHelper
     {
         /// <summary>
         /// Register interface:
@@ -13,12 +13,12 @@ namespace Service.Fees.Client
         public static void RegisterFeesClients(this ContainerBuilder builder,
             IMyNoSqlSubscriber myNoSqlSubscriber)
         {
-            var subs = new MyNoSqlReadRepository<FeesSettingsNoSqlEntity>(myNoSqlSubscriber,
-                FeesSettingsNoSqlEntity.TableName);
+            var subs = new MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity>(myNoSqlSubscriber,
+                SpotInstrumentFeesNoSqlEntity.TableName);
 
             builder
-                .RegisterInstance(new FeesSettingsClient(subs))
-                .As<IFeesSettingsClient>()
+                .RegisterInstance(new SpotInstrumentFeesClient(subs))
+                .As<ISpotInstrumentFeesClient>()
                 .AutoActivate()
                 .SingleInstance();
         }
