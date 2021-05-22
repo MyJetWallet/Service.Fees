@@ -15,6 +15,12 @@ namespace Service.Fees.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
+            
+            builder
+                .RegisterInstance(_myNoSqlClient)
+                .AsSelf()
+                .SingleInstance();
+            
             builder.RegisterAssetsDictionaryClients(_myNoSqlClient);
         }
     }
