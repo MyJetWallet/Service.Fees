@@ -47,7 +47,7 @@ namespace Service.Fees
 
             services.AddHostedService<ApplicationLifetimeManager>();
 
-            services.AddMyTelemetry(Program.Settings.ZipkinUrl);
+            services.AddMyTelemetry("SP-", Program.Settings.ZipkinUrl);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
