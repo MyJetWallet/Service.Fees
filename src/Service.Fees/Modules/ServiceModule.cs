@@ -16,6 +16,16 @@ namespace Service.Fees.Modules
 
             builder.RegisterType<SpotInstrumentFeesService>()
                 .As<ISpotInstrumentFeesService>();
+            
+            builder.RegisterType<AssetFeesSettingsService>()
+                .As<IAssetFeesSettingsService>()
+                .AsSelf()
+                .SingleInstance();
+            
+            builder.RegisterType<SpotInstrumentFeesSettingsService>()
+                .As<ISpotInstrumentFeesSettingsService>()
+                .AsSelf()
+                .SingleInstance();
         }
     }
 }
