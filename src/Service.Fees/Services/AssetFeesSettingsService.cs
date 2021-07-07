@@ -35,7 +35,7 @@ namespace Service.Fees.Services
                 BrokerId = e.AssetFees.BrokerId,
                 AccountId = e.AssetFees.AccountId,
                 WalletId = e.AssetFees.WalletId,
-                AssetId = e.AssetFees.AccountId,
+                AssetId = e.AssetFees.AssetId,
                 OperationType = e.AssetFees.OperationType,
                 FeeType = e.AssetFees.FeeType,
                 FeeSize = e.AssetFees.FeeSize,
