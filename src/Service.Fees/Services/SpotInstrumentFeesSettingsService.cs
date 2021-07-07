@@ -30,19 +30,7 @@ namespace Service.Fees.Services
         public async Task<List<SpotInstrumentFees>> GetSpotInstrumentFeesSettingsList()
         {
             var entities = await _writer.GetAsync();
-            return entities.Select(e => new SpotInstrumentFees
-            {
-                BrokerId = e.SpotInstrumentFees.BrokerId,
-                AccountId = e.SpotInstrumentFees.AccountId,
-                WalletId = e.SpotInstrumentFees.WalletId,
-                SpotInstrumentId = e.SpotInstrumentFees.AccountId,
-                FeeType = e.SpotInstrumentFees.FeeType,
-                MakerFeeSize = e.SpotInstrumentFees.MakerFeeSize,
-                MakerFeeSizeType = e.SpotInstrumentFees.MakerFeeSizeType,
-                TakerFeeSize = e.SpotInstrumentFees.TakerFeeSize,
-                TakerFeeSizeType = e.SpotInstrumentFees.TakerFeeSizeType,
-                FeeAssetId = e.SpotInstrumentFees.FeeAssetId,
-            }).ToList();
+            return entities.Select(e => e.SpotInstrumentFees).ToList();
         }
 
         public async Task AddSpotInstrumentFeesSettings(SpotInstrumentFees settings)

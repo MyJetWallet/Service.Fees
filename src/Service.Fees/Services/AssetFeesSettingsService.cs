@@ -30,18 +30,7 @@ namespace Service.Fees.Services
         public async Task<List<AssetFees>> GetAssetFeesSettingsList()
         {
             var entities = await _writer.GetAsync();
-            return entities.Select(e => new AssetFees
-            {
-                BrokerId = e.AssetFees.BrokerId,
-                AccountId = e.AssetFees.AccountId,
-                WalletId = e.AssetFees.WalletId,
-                AssetId = e.AssetFees.AssetId,
-                OperationType = e.AssetFees.OperationType,
-                FeeType = e.AssetFees.FeeType,
-                FeeSize = e.AssetFees.FeeSize,
-                FeeAssetId = e.AssetFees.FeeAssetId,
-                FeeSizeType = e.AssetFees.FeeSizeType
-            }).ToList();
+            return entities.Select(e => e.AssetFees).ToList();
         }
 
         public async Task AddAssetFeesSettings(AssetFees settings)
