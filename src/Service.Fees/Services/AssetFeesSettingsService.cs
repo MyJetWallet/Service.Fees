@@ -139,7 +139,6 @@ namespace Service.Fees.Services
             if (string.IsNullOrEmpty(settings.WalletId)) throw new Exception("Cannot add settings with empty wallet");
             if (string.IsNullOrEmpty(settings.AssetId)) throw new Exception("Cannot add settings with empty asset");
             if (settings.FeeSize < 0) throw new Exception("Cannot add settings with negative fee size");
-            if (string.IsNullOrEmpty(settings.FeeAssetId)) throw new Exception("Cannot add settings with empty fee asset");
         }
     }
 }

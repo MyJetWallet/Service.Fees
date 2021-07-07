@@ -141,7 +141,6 @@ namespace Service.Fees.Services
             if (string.IsNullOrEmpty(settings.SpotInstrumentId)) throw new Exception("Cannot add settings with empty instrument");
             if (settings.MakerFeeSize < 0) throw new Exception("Cannot add settings with negative maker fee size");
             if (settings.TakerFeeSize < 0) throw new Exception("Cannot add settings with negative taker fee size");
-            if (string.IsNullOrEmpty(settings.FeeAssetId)) throw new Exception("Cannot add settings with empty fee asset");
         }
     }
 }
