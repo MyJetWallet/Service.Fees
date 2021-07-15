@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1"/>
+        <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Service.Fees.Domain.Models\Service.Fees.Domain.Models.csproj"/>
+        <ProjectReference Include="..\Service.Fees.Domain.Models\Service.Fees.Domain.Models.csproj" />
     </ItemGroup>
 
 </Project>
