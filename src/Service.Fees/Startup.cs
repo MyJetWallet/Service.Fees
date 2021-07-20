@@ -24,17 +24,11 @@ namespace Service.Fees
 {
     public class Startup
     {
-        private readonly MyNoSqlTcpClient _myNoSqlClient;
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-
-            _myNoSqlClient = new MyNoSqlTcpClient(
-                () => SettingsReader.ReadSettings<SettingsModel>(Program.SettingsFileName).MyNoSqlReaderHostPort,
-                ApplicationEnvironment.HostName ??
-                $"{ApplicationEnvironment.AppName}:{ApplicationEnvironment.AppVersion}");
+            Configuration = configuration;            
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -88,7 +82,7 @@ namespace Service.Fees
         {
             builder.RegisterModule<SettingsModule>();
             builder.RegisterModule<ServiceModule>();
-            builder.RegisterModule(new ClientsModule(_myNoSqlClient));
+            builder.RegisterModule(new ClientsModule());
             builder.RegisterModule(new MyNoSqlModule(() => GetSettings().MyNoSqlWriterUrl));
         }
 

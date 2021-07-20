@@ -1,7 +1,6 @@
 ﻿using System;
 using Autofac;
-using MyNoSqlServer.Abstractions;
-using MyNoSqlServer.DataWriter;
+using MyJetWallet.Sdk.NoSql;
 using Service.Fees.MyNoSql;
 
 namespace Service.Fees.Modules
@@ -17,18 +16,9 @@ namespace Service.Fees.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            RegisterMyNoSqlWriter<FeesSettingsNoSqlEntity>(builder, FeesSettingsNoSqlEntity.TableName);
-            RegisterMyNoSqlWriter<AssetFeesNoSqlEntity>(builder, AssetFeesNoSqlEntity.TableName);
-            RegisterMyNoSqlWriter<SpotInstrumentFeesNoSqlEntity>(builder, SpotInstrumentFeesNoSqlEntity.TableName);
-        }
-
-        private void RegisterMyNoSqlWriter<TEntity>(ContainerBuilder builder, string table)
-            where TEntity : IMyNoSqlDbEntity, new()
-        {
-            builder.Register(ctx =>
-                    new MyNoSqlServerDataWriter<TEntity>(_myNoSqlServerWriterUrl, table, true))
-                .As<IMyNoSqlServerDataWriter<TEntity>>()
-                .SingleInstance();
+            builder.RegisterMyNoSqlWriter<FeesSettingsNoSqlEntity>(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl), FeesSettingsNoSqlEntity.TableName, true);
+            builder.RegisterMyNoSqlWriter<AssetFeesNoSqlEntity>(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl), AssetFeesNoSqlEntity.TableName, true);
+            builder.RegisterMyNoSqlWriter<SpotInstrumentFeesNoSqlEntity>(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl), SpotInstrumentFeesNoSqlEntity.TableName, true);
         }
     }
 }
