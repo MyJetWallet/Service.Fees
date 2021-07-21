@@ -10,9 +10,11 @@ namespace Service.Fees.MyNoSql
         public static string GeneratePartitionKey(string brokerId) => $"broker:{brokerId}";
         public static string GenerateRowKey(string spotInstrument) => $"{spotInstrument}";
 
+        public static string DEFAULT_FEES = "default";
+
         public static SpotInstrumentFeesNoSqlEntity Create(SpotInstrumentFees spotInstrumentFees)
         {
-            return new SpotInstrumentFeesNoSqlEntity()
+            return new()
             {
                 PartitionKey = GeneratePartitionKey(spotInstrumentFees.BrokerId),
                 RowKey = GenerateRowKey(spotInstrumentFees.SpotInstrumentId),

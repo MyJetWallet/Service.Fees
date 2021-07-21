@@ -26,5 +26,8 @@ namespace Service.Fees.Client.Grpc
 
         public ISpotInstrumentFeesSettingsService GetSpotInstrumentFeesSettingsService() =>
             _channel.CreateGrpcService<ISpotInstrumentFeesSettingsService>();
+
+        public IFeesSettingsService GetFeesSettingsService() =>
+            _channel.CreateGrpcService<IFeesSettingsService>();
     }
 }

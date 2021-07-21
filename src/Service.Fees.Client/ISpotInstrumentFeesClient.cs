@@ -1,5 +1,4 @@
-﻿using System;
-using MyNoSqlServer.DataReader;
+﻿using MyNoSqlServer.DataReader;
 using Service.Fees.Domain.Models;
 using Service.Fees.MyNoSql;
 
@@ -10,32 +9,51 @@ namespace Service.Fees.Client
     public interface ISpotInstrumentFeesClient
     {
         SpotInstrumentFees GetSpotInstrumentFees(string brokerId, string spotInstrumentId);
-
-        event Action OnChanged;
     }
 
     public class SpotInstrumentFeesClient : ISpotInstrumentFeesClient
     {
-        private readonly MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity> _reader;
+        private readonly MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity> _spotInstrumentsReader;
+        private readonly MyNoSqlReadRepository<FeesSettingsNoSqlEntity> _feesSettingsReader;
 
-        public SpotInstrumentFeesClient(MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity> reader)
+        public SpotInstrumentFeesClient(MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity> spotInstrumentsReader,
+            MyNoSqlReadRepository<FeesSettingsNoSqlEntity> feesSettingsReader)
         {
-            _reader = reader;
-            _reader.SubscribeToUpdateEvents(list => Changed(), list => Changed());
+            _spotInstrumentsReader = spotInstrumentsReader;
+            _feesSettingsReader = feesSettingsReader;
         }
 
         public SpotInstrumentFees GetSpotInstrumentFees(string brokerId, string spotInstrumentId)
         {
-            var entity = _reader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId),
+            var entity = _spotInstrumentsReader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId),
                 SpotInstrumentFeesNoSqlEntity.GenerateRowKey(spotInstrumentId));
-            return entity?.SpotInstrumentFees;
-        }
 
-        public event Action OnChanged;
+            if (entity == null)
+            {
+                entity = _spotInstrumentsReader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId),
+                    SpotInstrumentFeesNoSqlEntity.GenerateRowKey(SpotInstrumentFeesNoSqlEntity.DEFAULT_FEES));
+                if (entity == null)
+                {
+                    return new SpotInstrumentFees {FeeType = FeeType.NoFee};
+                }
+            }
 
-        private void Changed()
-        {
-            OnChanged?.Invoke();
+            var result = entity.SpotInstrumentFees;
+
+            if (string.IsNullOrEmpty(result.AccountId) ||
+                string.IsNullOrEmpty(result.WalletId))
+            {
+                var settings = _feesSettingsReader.Get(FeesSettingsNoSqlEntity.GeneratePartitionKey(brokerId),
+                    FeesSettingsNoSqlEntity.GenerateRowKey());
+                if (settings != null)
+                {
+                    result.BrokerId = settings.FeesSettings.BrokerId;
+                    result.AccountId = settings.FeesSettings.AccountId;
+                    result.WalletId = settings.FeesSettings.WalletId;
+                }
+            }
+
+            return result;
         }
     }
 }

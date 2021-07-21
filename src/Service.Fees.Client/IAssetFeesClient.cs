@@ -1,5 +1,4 @@
-﻿using System;
-using MyNoSqlServer.DataReader;
+﻿using MyNoSqlServer.DataReader;
 using Service.Fees.Domain.Models;
 using Service.Fees.MyNoSql;
 
@@ -10,32 +9,47 @@ namespace Service.Fees.Client
     public interface IAssetFeesClient
     {
         AssetFees GetAssetFees(string brokerId, string assetId, OperationType operationType);
-
-        event Action OnChanged;
     }
 
     public class AssetFeesClient : IAssetFeesClient
     {
-        private readonly MyNoSqlReadRepository<AssetFeesNoSqlEntity> _reader;
+        private readonly MyNoSqlReadRepository<AssetFeesNoSqlEntity> _assetFeesReader;
+        private readonly MyNoSqlReadRepository<FeesSettingsNoSqlEntity> _feesSettingsReader;
 
-        public AssetFeesClient(MyNoSqlReadRepository<AssetFeesNoSqlEntity> reader)
+
+        public AssetFeesClient(MyNoSqlReadRepository<AssetFeesNoSqlEntity> assetFeesReader,
+            MyNoSqlReadRepository<FeesSettingsNoSqlEntity> feesSettingsReader)
         {
-            _reader = reader;
-            _reader.SubscribeToUpdateEvents(list => Changed(), list => Changed());
+            _assetFeesReader = assetFeesReader;
+            _feesSettingsReader = feesSettingsReader;
         }
 
         public AssetFees GetAssetFees(string brokerId, string assetId, OperationType operationType)
         {
-            var entity = _reader.Get(AssetFeesNoSqlEntity.GeneratePartitionKey(brokerId),
+            var entity = _assetFeesReader.Get(AssetFeesNoSqlEntity.GeneratePartitionKey(brokerId),
                 AssetFeesNoSqlEntity.GenerateRowKey(assetId, operationType));
+
+            if (entity == null)
+            {
+                return new AssetFees {FeeType = FeeType.NoFee};
+            }
+
+            var result = entity.AssetFees;
+
+            if (string.IsNullOrEmpty(result.AccountId) ||
+                string.IsNullOrEmpty(result.WalletId))
+            {
+                var settings = _feesSettingsReader.Get(FeesSettingsNoSqlEntity.GeneratePartitionKey(brokerId),
+                    FeesSettingsNoSqlEntity.GenerateRowKey());
+                if (settings != null)
+                {
+                    result.BrokerId = settings.FeesSettings.BrokerId;
+                    result.AccountId = settings.FeesSettings.AccountId;
+                    result.WalletId = settings.FeesSettings.WalletId;
+                }
+            }
+            
             return entity?.AssetFees;
-        }
-
-        public event Action OnChanged;
-
-        private void Changed()
-        {
-            OnChanged?.Invoke();
         }
     }
 }

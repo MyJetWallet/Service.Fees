@@ -9,9 +9,6 @@ namespace Service.Fees.Grpc
     public interface IAssetFeesService
     {
         [OperationContract]
-        Task<FeesResponse<AssetFees>> SetAssetFeesAsync(AssetFees assetFees);
-
-        [OperationContract]
         Task<NullableValue<AssetFees>> GetAssetFees(GetAssetFeesRequest request);
     }
 }

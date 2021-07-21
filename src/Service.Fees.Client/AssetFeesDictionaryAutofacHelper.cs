@@ -13,11 +13,14 @@ namespace Service.Fees.Client
         public static void RegisterAssetFeesClients(this ContainerBuilder builder,
             IMyNoSqlSubscriber myNoSqlSubscriber)
         {
-            var subs = new MyNoSqlReadRepository<AssetFeesNoSqlEntity>(myNoSqlSubscriber,
+            var assetFees = new MyNoSqlReadRepository<AssetFeesNoSqlEntity>(myNoSqlSubscriber,
                 AssetFeesNoSqlEntity.TableName);
+            
+            var feesSettings = new MyNoSqlReadRepository<FeesSettingsNoSqlEntity>(myNoSqlSubscriber,
+                FeesSettingsNoSqlEntity.TableName);
 
             builder
-                .RegisterInstance(new AssetFeesClient(subs))
+                .RegisterInstance(new AssetFeesClient(assetFees, feesSettings))
                 .As<IAssetFeesClient>()
                 .AutoActivate()
                 .SingleInstance();

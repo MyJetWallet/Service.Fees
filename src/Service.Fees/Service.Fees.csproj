@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Service.Fees.Client\Service.Fees.Client.csproj" />
         <ProjectReference Include="..\Service.Fees.Grpc\Service.Fees.Grpc.csproj" />
         <ProjectReference Include="..\Service.Fees.MyNoSql\Service.Fees.MyNoSql.csproj" />
     </ItemGroup>

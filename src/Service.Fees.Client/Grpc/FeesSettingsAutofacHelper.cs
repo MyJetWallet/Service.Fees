@@ -10,6 +10,8 @@ namespace Service.Fees.Client.Grpc
         {
             var factory = new FeesSettingsFactory(feesSettingsGrpcServiceUrl);
 
+            builder.RegisterInstance(factory.GetFeesSettingsService())
+                .As<IFeesSettingsService>().SingleInstance();
             builder.RegisterInstance(factory.GetAssetFeesSettingsService())
                 .As<IAssetFeesSettingsService>().SingleInstance();
             builder.RegisterInstance(factory.GetSpotInstrumentFeesSettingsService())

@@ -16,9 +16,9 @@ namespace Service.Fees.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterMyNoSqlWriter<FeesSettingsNoSqlEntity>(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl), FeesSettingsNoSqlEntity.TableName, true);
-            builder.RegisterMyNoSqlWriter<AssetFeesNoSqlEntity>(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl), AssetFeesNoSqlEntity.TableName, true);
-            builder.RegisterMyNoSqlWriter<SpotInstrumentFeesNoSqlEntity>(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl), SpotInstrumentFeesNoSqlEntity.TableName, true);
+            builder.RegisterMyNoSqlWriter<FeesSettingsNoSqlEntity>(_myNoSqlServerWriterUrl, FeesSettingsNoSqlEntity.TableName);
+            builder.RegisterMyNoSqlWriter<AssetFeesNoSqlEntity>(_myNoSqlServerWriterUrl, AssetFeesNoSqlEntity.TableName);
+            builder.RegisterMyNoSqlWriter<SpotInstrumentFeesNoSqlEntity>(_myNoSqlServerWriterUrl, SpotInstrumentFeesNoSqlEntity.TableName);
         }
     }
 }

@@ -9,16 +9,13 @@ using Microsoft.Extensions.Hosting;
 using MyJetWallet.Sdk.GrpcMetrics;
 using MyJetWallet.Sdk.GrpcSchema;
 using MyJetWallet.Sdk.Service;
-using MyNoSqlServer.DataReader;
 using Prometheus;
 using ProtoBuf.Grpc.Server;
 using Service.Fees.Grpc;
 using Service.Fees.Modules;
 using Service.Fees.Services;
-using Service.Fees.Settings;
 using SimpleTrading.BaseMetrics;
 using SimpleTrading.ServiceStatusReporterConnector;
-using SimpleTrading.SettingsReader;
 
 namespace Service.Fees
 {
@@ -83,12 +80,7 @@ namespace Service.Fees
             builder.RegisterModule<SettingsModule>();
             builder.RegisterModule<ServiceModule>();
             builder.RegisterModule(new ClientsModule());
-            builder.RegisterModule(new MyNoSqlModule(() => GetSettings().MyNoSqlWriterUrl));
-        }
-
-        private SettingsModel GetSettings()
-        {
-            return SettingsReader.ReadSettings<SettingsModel>(Program.SettingsFileName);
+            builder.RegisterModule(new MyNoSqlModule(Program.ReloadedSettings(e => e.MyNoSqlWriterUrl)));
         }
     }
 }

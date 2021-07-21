@@ -13,11 +13,14 @@ namespace Service.Fees.Client
         public static void RegisterSpotInstrumentFeesClients(this ContainerBuilder builder,
             IMyNoSqlSubscriber myNoSqlSubscriber)
         {
-            var subs = new MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity>(myNoSqlSubscriber,
+            var instrumentFees = new MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity>(myNoSqlSubscriber,
                 SpotInstrumentFeesNoSqlEntity.TableName);
+            
+            var feesSettings = new MyNoSqlReadRepository<FeesSettingsNoSqlEntity>(myNoSqlSubscriber,
+                FeesSettingsNoSqlEntity.TableName);
 
             builder
-                .RegisterInstance(new SpotInstrumentFeesClient(subs))
+                .RegisterInstance(new SpotInstrumentFeesClient(instrumentFees, feesSettings))
                 .As<ISpotInstrumentFeesClient>()
                 .AutoActivate()
                 .SingleInstance();

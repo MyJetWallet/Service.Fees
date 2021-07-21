@@ -9,9 +9,6 @@ namespace Service.Fees.Grpc
     public interface ISpotInstrumentFeesService
     {
         [OperationContract]
-        Task<FeesResponse<SpotInstrumentFees>> SetSpotInstrumentFeesAsync(SpotInstrumentFees spotInstrumentFees);
-
-        [OperationContract]
         Task<NullableValue<SpotInstrumentFees>> GetSpotInstrumentFeesAsync(GetSpotInstrumentFeesRequest request);
     }
 }

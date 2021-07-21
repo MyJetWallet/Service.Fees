@@ -10,8 +10,6 @@ namespace Service.Fees.Client
     public interface IFeesSettingsClient
     {
         FeesSettings GetFeesSettings(string brokerId);
-
-        event Action OnChanged;
     }
 
     public class FeesSettingsClient : IFeesSettingsClient
@@ -21,7 +19,6 @@ namespace Service.Fees.Client
         public FeesSettingsClient(MyNoSqlReadRepository<FeesSettingsNoSqlEntity> reader)
         {
             _reader = reader;
-            _reader.SubscribeToUpdateEvents(list => Changed(), list => Changed());
         }
 
         public FeesSettings GetFeesSettings(string brokerId)
@@ -29,13 +26,6 @@ namespace Service.Fees.Client
             var entity = _reader.Get(FeesSettingsNoSqlEntity.GeneratePartitionKey(brokerId),
                 FeesSettingsNoSqlEntity.GenerateRowKey());
             return entity?.FeesSettings;
-        }
-
-        public event Action OnChanged;
-
-        private void Changed()
-        {
-            OnChanged?.Invoke();
         }
     }
 }
