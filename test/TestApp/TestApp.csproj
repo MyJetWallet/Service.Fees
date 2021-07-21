@@ -13,6 +13,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Service.Fees.Client\Service.Fees.Client.csproj" />
         <ProjectReference Include="..\..\src\Service.Fees.Grpc\Service.Fees.Grpc.csproj" />
+        <ProjectReference Include="..\..\src\Service.Fees.MyNoSql\Service.Fees.MyNoSql.csproj" />
     </ItemGroup>
 
 </Project>
