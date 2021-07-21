@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MyNoSqlServer.Abstractions;
@@ -20,6 +22,12 @@ namespace Service.Fees.Services
         {
             _writer = writer;
             _logger = logger;
+        }
+
+        public async Task<List<FeesSettings>> GetFeesSettingsList()
+        {
+            var entities = await _writer.GetAsync();
+            return entities.Select(e => e.FeesSettings).ToList();
         }
 
         public async Task<FeesResponse<FeesSettings>> SetFeesSettingsAsync(FeesSettings feesSettings)
