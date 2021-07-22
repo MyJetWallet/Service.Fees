@@ -11,11 +11,14 @@ namespace Service.Fees.Grpc
     {
         [OperationContract]
         Task<List<FeesSettings>> GetFeesSettingsList();
-        
-        [OperationContract]
-        Task<FeesResponse<FeesSettings>> SetFeesSettingsAsync(FeesSettings feesSettings);
 
         [OperationContract]
-        Task<NullableValue<FeesSettings>> GetFeesSettingsAsync(GetFeesSettingsRequest request);
+        Task AddFeesSettings(FeesSettings settings);
+
+        [OperationContract]
+        Task UpdateFeesSettings(FeesSettings settings);
+
+        [OperationContract]
+        Task RemoveFeesSettings(RemoveFeesSettingsRequest request);
     }
 }
