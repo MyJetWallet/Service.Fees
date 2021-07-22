@@ -124,8 +124,6 @@ namespace Service.Fees.Services
         private static void ValidateSettings(AssetFees settings)
         {
             if (string.IsNullOrEmpty(settings.BrokerId)) throw new Exception("Cannot add settings with empty broker");
-            if (string.IsNullOrEmpty(settings.AccountId)) throw new Exception("Cannot add settings with empty account");
-            if (string.IsNullOrEmpty(settings.WalletId)) throw new Exception("Cannot add settings with empty wallet");
             if (string.IsNullOrEmpty(settings.AssetId)) throw new Exception("Cannot add settings with empty asset");
             if (settings.FeeSize < 0) throw new Exception("Cannot add settings with negative fee size");
         }
