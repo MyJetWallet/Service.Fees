@@ -16,6 +16,8 @@ namespace Service.Fees.Client.Grpc
                 .As<IAssetFeesSettingsService>().SingleInstance();
             builder.RegisterInstance(factory.GetSpotInstrumentFeesSettingsService())
                 .As<ISpotInstrumentFeesSettingsService>().SingleInstance();
+            builder.RegisterInstance(factory.GetGroupsService())
+                .As<IFeeGroupService>().SingleInstance();
         }
     }
 }

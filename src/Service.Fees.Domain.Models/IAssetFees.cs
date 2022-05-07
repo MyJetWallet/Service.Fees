@@ -7,6 +7,7 @@ namespace Service.Fees.Domain.Models
         string BrokerId { get; }
         string AssetId { get; }
         OperationType OperationType { get; }
+        string GroupId { get; }
 
         FeeType FeeType { get; }
         FeeSizeType FeeSizeType { get; }
@@ -28,6 +29,7 @@ namespace Service.Fees.Domain.Models
         [DataMember(Order = 7)] public string FeeAssetId { get; set; }
         [DataMember(Order = 8)] public string AccountId { get; set; }
         [DataMember(Order = 9)] public string WalletId { get; set; }
+        [DataMember(Order = 10)] public string GroupId { get; set; }
 
         public static AssetFees Create(IAssetFees assetFees)
         {
@@ -41,7 +43,8 @@ namespace Service.Fees.Domain.Models
                 FeeSize = assetFees.FeeSize,
                 FeeAssetId = assetFees.FeeAssetId,
                 AccountId = assetFees.AccountId,
-                WalletId = assetFees.WalletId
+                WalletId = assetFees.WalletId,
+                GroupId = assetFees.GroupId,
             };
         }
     }

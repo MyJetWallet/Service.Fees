@@ -6,6 +6,7 @@ namespace Service.Fees.Domain.Models
     {
         string BrokerId { get; }
         string SpotInstrumentId { get; }
+        string GroupId { get; }
 
         FeeType FeeType { get; }
         FeeSizeType MakerFeeSizeType { get; }
@@ -30,6 +31,7 @@ namespace Service.Fees.Domain.Models
         [DataMember(Order = 8)] public string FeeAssetId { get; set; }
         [DataMember(Order = 9)] public string AccountId { get; set; }
         [DataMember(Order = 10)] public string WalletId { get; set; }
+        [DataMember(Order = 11)] public string GroupId { get; set; }
 
         public static SpotInstrumentFees Create(ISpotInstrumentFees spotInstrumentFees)
         {
@@ -44,7 +46,8 @@ namespace Service.Fees.Domain.Models
                 TakerFeeSize = spotInstrumentFees.TakerFeeSize,
                 FeeAssetId = spotInstrumentFees.FeeAssetId,
                 AccountId = spotInstrumentFees.AccountId,
-                WalletId = spotInstrumentFees.WalletId
+                WalletId = spotInstrumentFees.WalletId,
+                GroupId = spotInstrumentFees.GroupId
             };
         }
     }

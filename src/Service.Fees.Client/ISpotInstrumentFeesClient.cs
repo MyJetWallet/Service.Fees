@@ -8,7 +8,7 @@ namespace Service.Fees.Client
 {
     public interface ISpotInstrumentFeesClient
     {
-        SpotInstrumentFees GetSpotInstrumentFees(string brokerId, string spotInstrumentId);
+        SpotInstrumentFees GetSpotInstrumentFees(string brokerId, string groupId, string spotInstrumentId);
     }
 
     public class SpotInstrumentFeesClient : ISpotInstrumentFeesClient
@@ -23,14 +23,14 @@ namespace Service.Fees.Client
             _feesSettingsReader = feesSettingsReader;
         }
 
-        public SpotInstrumentFees GetSpotInstrumentFees(string brokerId, string spotInstrumentId)
+        public SpotInstrumentFees GetSpotInstrumentFees(string brokerId, string groupId, string spotInstrumentId)
         {
-            var entity = _spotInstrumentsReader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId),
+            var entity = _spotInstrumentsReader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId, groupId),
                 SpotInstrumentFeesNoSqlEntity.GenerateRowKey(spotInstrumentId));
 
             if (entity == null)
             {
-                entity = _spotInstrumentsReader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId),
+                entity = _spotInstrumentsReader.Get(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(brokerId, groupId),
                     SpotInstrumentFeesNoSqlEntity.GenerateRowKey(SpotInstrumentFeesNoSqlEntity.DEFAULT_FEES));
                 if (entity == null)
                 {

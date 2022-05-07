@@ -8,7 +8,7 @@ namespace Service.Fees.Client
 {
     public interface IAssetFeesClient
     {
-        AssetFees GetAssetFees(string brokerId, string assetId, OperationType operationType);
+        AssetFees GetAssetFees(string brokerId, string groupId,  string assetId, OperationType operationType);
     }
 
     public class AssetFeesClient : IAssetFeesClient
@@ -24,9 +24,9 @@ namespace Service.Fees.Client
             _feesSettingsReader = feesSettingsReader;
         }
 
-        public AssetFees GetAssetFees(string brokerId, string assetId, OperationType operationType)
+        public AssetFees GetAssetFees(string brokerId, string groupId, string assetId, OperationType operationType)
         {
-            var entity = _assetFeesReader.Get(AssetFeesNoSqlEntity.GeneratePartitionKey(brokerId),
+            var entity = _assetFeesReader.Get(AssetFeesNoSqlEntity.GeneratePartitionKey(brokerId, groupId),
                 AssetFeesNoSqlEntity.GenerateRowKey(assetId, operationType));
 
             if (entity == null)

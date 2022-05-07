@@ -5,9 +5,9 @@ namespace Service.Fees.MyNoSql
 {
     public class SpotInstrumentFeesNoSqlEntity : MyNoSqlDbEntity
     {
-        public const string TableName = "myjetwallet-fees-spot-instrument";
+        public const string TableName = "myjetwallet-fees-spot-instrument-v2";
 
-        public static string GeneratePartitionKey(string brokerId) => $"broker:{brokerId}";
+        public static string GeneratePartitionKey(string brokerId, string group) => $"broker:{brokerId}|group:{group}";
         public static string GenerateRowKey(string spotInstrument) => $"{spotInstrument}";
 
         public static string DEFAULT_FEES = "default";
@@ -16,7 +16,7 @@ namespace Service.Fees.MyNoSql
         {
             return new()
             {
-                PartitionKey = GeneratePartitionKey(spotInstrumentFees.BrokerId),
+                PartitionKey = GeneratePartitionKey(spotInstrumentFees.BrokerId, spotInstrumentFees.GroupId),
                 RowKey = GenerateRowKey(spotInstrumentFees.SpotInstrumentId),
                 BrokerId = spotInstrumentFees.BrokerId,
                 SpotInstrumentId = spotInstrumentFees.SpotInstrumentId,

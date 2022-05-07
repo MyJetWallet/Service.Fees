@@ -20,7 +20,7 @@ namespace Service.Fees.Services
         {
             try
             {
-                var fees = _client.GetAssetFees(request.BrokerId, request.AssetId, request.OperationType);
+                var fees = _client.GetAssetFees(request.BrokerId, request.GroupId, request.AssetId, request.OperationType);
 
                 return fees == null ? null : new NullableValue<AssetFees>(AssetFees.Create(fees));
             }
