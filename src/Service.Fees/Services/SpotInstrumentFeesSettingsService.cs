@@ -102,7 +102,7 @@ namespace Service.Fees.Services
                 _logger.LogInformation("Remove Spot Instrument Fees Setting: {jsonText}",
                     JsonConvert.SerializeObject(request));
 
-                var entity = await _writer.DeleteAsync(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(request.BrokerId, request.GroupId),
+                var entity = await _writer.DeleteAsync(SpotInstrumentFeesNoSqlEntity.GeneratePartitionKey(request.BrokerId),
                     SpotInstrumentFeesNoSqlEntity.GenerateRowKey(request.SpotInstrumentId));
                 
                 if (entity != null)
@@ -124,7 +124,6 @@ namespace Service.Fees.Services
         private static void ValidateSettings(SpotInstrumentFees settings)
         {
             if (string.IsNullOrEmpty(settings.BrokerId)) throw new Exception("Cannot add settings with empty broker");
-            if (string.IsNullOrEmpty(settings.GroupId)) throw new Exception("Cannot add settings with empty group");
             if (string.IsNullOrEmpty(settings.SpotInstrumentId)) throw new Exception("Cannot add settings with empty instrument");
             if (settings.MakerFeeSize < 0) throw new Exception("Cannot add settings with negative maker fee size");
             if (settings.TakerFeeSize < 0) throw new Exception("Cannot add settings with negative taker fee size");

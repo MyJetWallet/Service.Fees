@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MyNoSqlServer.DataReader;
 using MyNoSqlServer.DataWriter;
 using Newtonsoft.Json;
 using ProtoBuf.Grpc.Client;
+using Service.Fees.Domain.Models;
 using Service.Fees.MyNoSql;
 
 namespace TestApp
@@ -14,8 +17,8 @@ namespace TestApp
 
         public static string GetUrl()
         {
-            // return "http://192.168.1.80:5123";
-            return "192.168.1.80:5125";
+            return "http://192.168.70.80:5123"; //writer
+            //return "192.168.1.80:5125";
         }
 
         public static async Task ReadAssetsFees()
@@ -73,6 +76,29 @@ namespace TestApp
             // Console.WriteLine(JsonConvert.SerializeObject(entities1));
         }
         
+        public static async Task FirstInitForProfiles()
+        {
+            var groupWriter = new MyNoSqlServerDataWriter<FeeProfilesNoSqlEntity>(GetUrl, FeeProfilesNoSqlEntity.TableName, false);
+
+            var profiles = new List<string>();
+            profiles.Add(FeeProfileConsts.DefaultProfile);
+            await groupWriter.InsertOrReplaceAsync(FeeProfilesNoSqlEntity.Create(profiles));
+            
+            var oldWriter = new MyNoSqlServerDataWriter<AssetFeesNoSqlEntity>(GetUrl, "myjetwallet-fees-assets", false);
+            var entities = await oldWriter.GetAsync();
+            Console.WriteLine(JsonConvert.SerializeObject(entities));
+
+            var newWriter = new MyNoSqlServerDataWriter<AssetFeesNoSqlEntity>(GetUrl, AssetFeesNoSqlEntity.TableName, false);
+            foreach (var entity in entities.Select(t => t.AssetFees))
+            {
+                entity.ProfileId = FeeProfileConsts.DefaultProfile;
+                await newWriter.InsertOrReplaceAsync(AssetFeesNoSqlEntity.Create(entity));
+            }
+            var newEntities = await newWriter.GetAsync();
+            Console.WriteLine(JsonConvert.SerializeObject(newEntities));
+        }
+
+        
         static async Task Main(string[] args)
         {
             GrpcClientFactory.AllowUnencryptedHttp2 = true;
@@ -81,8 +107,8 @@ namespace TestApp
             Console.ReadLine();
             
             // await ReadAssetsFees();
-            await ReadInstrumentsFees();
-            
+            // await ReadInstrumentsFees();
+            await FirstInitForProfiles();
 
             Console.WriteLine("End");
             Console.ReadLine();

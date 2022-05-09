@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Service.Fees.Grpc.Models;
 
 [DataContract]
-public class OperationResposne
+public class OperationResponse
 {
     [DataMember(Order = 1)] public bool IsSuccess { get; set; }
     

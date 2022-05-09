@@ -30,7 +30,7 @@ namespace Service.Fees.Client.Grpc
         public IFeesSettingsService GetFeesSettingsService() =>
             _channel.CreateGrpcService<IFeesSettingsService>();
         
-        public IFeeGroupService GetGroupsService() => _channel.CreateGrpcService<IFeeGroupService>();
+        public IFeeProfileService GetGroupsService() => _channel.CreateGrpcService<IFeeProfileService>();
 
     }
 }

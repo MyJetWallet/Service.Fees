@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Service.Fees.Grpc.Models;
 
 [DataContract]
-public class GroupsResponse
+public class ProfilesResponse
 {
-    [DataMember(Order = 1)] public List<string> Groups { get; set; }
+    [DataMember(Order = 1)] public List<string> Profiles { get; set; }
 }

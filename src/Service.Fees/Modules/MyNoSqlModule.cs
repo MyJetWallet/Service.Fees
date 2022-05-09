@@ -19,7 +19,7 @@ namespace Service.Fees.Modules
             builder.RegisterMyNoSqlWriter<FeesSettingsNoSqlEntity>(_myNoSqlServerWriterUrl, FeesSettingsNoSqlEntity.TableName);
             builder.RegisterMyNoSqlWriter<AssetFeesNoSqlEntity>(_myNoSqlServerWriterUrl, AssetFeesNoSqlEntity.TableName);
             builder.RegisterMyNoSqlWriter<SpotInstrumentFeesNoSqlEntity>(_myNoSqlServerWriterUrl, SpotInstrumentFeesNoSqlEntity.TableName);
-            builder.RegisterMyNoSqlWriter<GroupsNoSqlEntity>(_myNoSqlServerWriterUrl, GroupsNoSqlEntity.TableName);
+            builder.RegisterMyNoSqlWriter<FeeProfilesNoSqlEntity>(_myNoSqlServerWriterUrl, FeeProfilesNoSqlEntity.TableName);
 
         }
     }

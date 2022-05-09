@@ -7,7 +7,7 @@ namespace Service.Fees.MyNoSql
     {
         public const string TableName = "myjetwallet-fees-assets-v2";
 
-        public static string GeneratePartitionKey(string brokerId, string group) => $"broker:{brokerId}|group:{group}";
+        public static string GeneratePartitionKey(string brokerId, string profile) => $"broker:{brokerId}|profile:{profile}";
 
         public static string GenerateRowKey(string asset, OperationType operationType) =>
             $"{asset}:{operationType.ToString()}";
@@ -16,7 +16,7 @@ namespace Service.Fees.MyNoSql
         {
             return new AssetFeesNoSqlEntity()
             {
-                PartitionKey = GeneratePartitionKey(assetFees.BrokerId, assetFees.GroupId),
+                PartitionKey = GeneratePartitionKey(assetFees.BrokerId, assetFees.ProfileId),
                 RowKey = GenerateRowKey(assetFees.AssetId, assetFees.OperationType),
                 BrokerId = assetFees.BrokerId,
                 AssetId = assetFees.AssetId,

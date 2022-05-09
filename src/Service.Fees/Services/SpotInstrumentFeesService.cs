@@ -21,7 +21,7 @@ namespace Service.Fees.Services
         {
             try
             {
-                var fees = _client.GetSpotInstrumentFees(request.BrokerId, request.SpotInstrumentId, request.GroupId);
+                var fees = _client.GetSpotInstrumentFees(request.BrokerId, request.SpotInstrumentId);
 
                 return fees == null ? null : new NullableValue<SpotInstrumentFees>(SpotInstrumentFees.Create(fees));
             }
