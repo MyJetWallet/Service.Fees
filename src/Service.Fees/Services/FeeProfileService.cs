@@ -38,7 +38,8 @@ namespace Service.Fees.Services
                     FeeProfilesNoSqlEntity.GenerateRowKey());
                 var groupsList = groups?.Profiles ?? new List<string>();
                 groupsList.Add(request.ProfileId);
-
+                await _profileWriter.InsertOrReplaceAsync(FeeProfilesNoSqlEntity.Create(groupsList));
+                
                 if (!string.IsNullOrWhiteSpace(request.CloneFromProfileId))
                 {
                     var assets =
@@ -52,7 +53,6 @@ namespace Service.Fees.Services
                     }
 
                     await _assetWriter.BulkInsertOrReplaceAsync(assets.Select(AssetFeesNoSqlEntity.Create));
-                    
                 }
 
                 return new OperationResponse()
@@ -78,6 +78,7 @@ namespace Service.Fees.Services
                     FeeProfilesNoSqlEntity.GenerateRowKey());
                 var groupsList = groups?.Profiles ?? new List<string>();
                 groupsList.Remove(request.ProfileId);
+                await _profileWriter.InsertOrReplaceAsync(FeeProfilesNoSqlEntity.Create(groupsList));
 
                 var assets =
                     (await _assetWriter.GetAsync(
