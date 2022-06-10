@@ -52,7 +52,7 @@ namespace Service.Fees.Services
                         asset.ProfileId = request.ProfileId;
                     }
 
-                    await _assetWriter.BulkInsertOrReplaceAsync(assets.Select(AssetFeesNoSqlEntity.Create));
+                    await _assetWriter.BulkInsertOrReplaceAsync(assets.Select(AssetFeesNoSqlEntity.Create).ToList());
                 }
 
                 return new OperationResponse()
