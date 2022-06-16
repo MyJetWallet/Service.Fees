@@ -14,6 +14,9 @@ namespace Service.Fees.Modules
             builder.RegisterType<AssetFeesService>()
                 .As<IAssetFeesService>();
 
+            builder.RegisterType<DepositFeesService>()
+                .As<IDepositFeesService>();
+            
             builder.RegisterType<SpotInstrumentFeesService>()
                 .As<ISpotInstrumentFeesService>();
             

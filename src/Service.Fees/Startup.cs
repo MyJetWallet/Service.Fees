@@ -62,6 +62,8 @@ namespace Service.Fees
                 endpoints.MapGrpcSchema<AssetFeesSettingsService, IAssetFeesSettingsService>();
                 endpoints.MapGrpcSchema<SpotInstrumentFeesSettingsService, ISpotInstrumentFeesSettingsService>();
                 endpoints.MapGrpcSchema<FeeProfileService, IFeeProfileService>();
+                endpoints.MapGrpcSchema<DepositFeesService, IDepositFeesService>();
+                endpoints.MapGrpcSchema<DepositFeesSettingsService, IDepositFeesSettingsService>();
 
                 endpoints.MapGet("/",
                     async context =>

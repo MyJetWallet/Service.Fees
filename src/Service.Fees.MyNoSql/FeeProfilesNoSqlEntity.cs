@@ -12,16 +12,19 @@ namespace Service.Fees.MyNoSql
 
         public static string GenerateRowKey() => "FeeProfiles";
 
-        public static FeeProfilesNoSqlEntity Create(List<string> profiles)
+        public static FeeProfilesNoSqlEntity Create(List<string> profiles, List<string> depositProfiles)
         {
             return new FeeProfilesNoSqlEntity()
             {
                 PartitionKey = GeneratePartitionKey(),
                 RowKey = GenerateRowKey(),
-                Profiles = profiles
+                Profiles = profiles,
+                DepositProfiles = depositProfiles
             };
         }
 
         public List<string> Profiles { get; set; }
+        public List<string> DepositProfiles { get; set; }
+
     }
 }

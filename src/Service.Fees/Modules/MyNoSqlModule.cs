@@ -20,6 +20,7 @@ namespace Service.Fees.Modules
             builder.RegisterMyNoSqlWriter<AssetFeesNoSqlEntity>(_myNoSqlServerWriterUrl, AssetFeesNoSqlEntity.TableName);
             builder.RegisterMyNoSqlWriter<SpotInstrumentFeesNoSqlEntity>(_myNoSqlServerWriterUrl, SpotInstrumentFeesNoSqlEntity.TableName);
             builder.RegisterMyNoSqlWriter<FeeProfilesNoSqlEntity>(_myNoSqlServerWriterUrl, FeeProfilesNoSqlEntity.TableName);
+            builder.RegisterMyNoSqlWriter<DepositFeesNoSqlEntity>(_myNoSqlServerWriterUrl, DepositFeesNoSqlEntity.TableName);
 
         }
     }

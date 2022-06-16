@@ -6,5 +6,7 @@ namespace Service.Fees.Grpc.Models;
 [DataContract]
 public class ProfilesResponse
 {
-    [DataMember(Order = 1)] public List<string> Profiles { get; set; }
+    [DataMember(Order = 1)] public List<string> WithdrawalProfiles { get; set; }
+    [DataMember(Order = 2)] public List<string> DepositProfiles { get; set; }
+
 }

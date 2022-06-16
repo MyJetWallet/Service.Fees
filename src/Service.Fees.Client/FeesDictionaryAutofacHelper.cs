@@ -19,11 +19,14 @@ namespace Service.Fees.Client
             var assetFees = new MyNoSqlReadRepository<AssetFeesNoSqlEntity>(myNoSqlSubscriber,
                 AssetFeesNoSqlEntity.TableName);
             
+            var depositFees = new MyNoSqlReadRepository<DepositFeesNoSqlEntity>(myNoSqlSubscriber,
+                DepositFeesNoSqlEntity.TableName);
+            
             var instrumentFees = new MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity>(myNoSqlSubscriber,
                 SpotInstrumentFeesNoSqlEntity.TableName);
 
             builder
-                .RegisterInstance(new DepositFeesClient())
+                .RegisterInstance(new DepositFeesClient(depositFees))
                 .As<IDepositFeesClient>()
                 .AutoActivate()
                 .SingleInstance();

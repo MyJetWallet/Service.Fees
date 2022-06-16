@@ -14,7 +14,7 @@ namespace Service.Fees.Client
 
     public class DepositFeesClient : IDepositFeesClient
     {
-       // private readonly MyNoSqlReadRepository<DepositFeesNoSqlEntity> _depositFeesReader;
+        private readonly MyNoSqlReadRepository<DepositFeesNoSqlEntity> _depositFeesReader;
 
         private readonly Dictionary<string, DepositFees> _mock = new Dictionary<string, DepositFees>()
         {
@@ -59,24 +59,22 @@ namespace Service.Fees.Client
             },
         };
 
-        // public DepositFeesClient(MyNoSqlReadRepository<DepositFeesNoSqlEntity> depositFeesReader)
-        // {
-        //     _depositFeesReader = depositFeesReader;
-        // }
+        public DepositFeesClient(MyNoSqlReadRepository<DepositFeesNoSqlEntity> depositFeesReader)
+        {
+            _depositFeesReader = depositFeesReader;
+        }
 
         public DepositFees GetDepositFees(string brokerId, string groupId, string assetId)
         {
-            // var entity = _depositFeesReader.Get(DepositFeesNoSqlEntity.GeneratePartitionKey(brokerId, groupId),
-            //     DepositFeesNoSqlEntity.GenerateRowKey(assetId));
+            var entity = _depositFeesReader.Get(DepositFeesNoSqlEntity.GeneratePartitionKey(brokerId, groupId),
+                 DepositFeesNoSqlEntity.GenerateRowKey(assetId));
 
-            if (!_mock.TryGetValue(assetId, out var fees))
+            if (entity == null)
             {
                 return new DepositFees {FeeType = FeeType.NoFee};
             }
             
-            return fees;
-
-            //return entity?.DepositFees;
+            return entity?.DepositFees;
         }
     }
 }

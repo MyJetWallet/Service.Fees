@@ -78,24 +78,24 @@ namespace TestApp
         
         public static async Task FirstInitForProfiles()
         {
-            var groupWriter = new MyNoSqlServerDataWriter<FeeProfilesNoSqlEntity>(GetUrl, FeeProfilesNoSqlEntity.TableName, false);
-
-            var profiles = new List<string>();
-            profiles.Add(FeeProfileConsts.DefaultProfile);
-            await groupWriter.InsertOrReplaceAsync(FeeProfilesNoSqlEntity.Create(profiles));
-            
-            var oldWriter = new MyNoSqlServerDataWriter<AssetFeesNoSqlEntity>(GetUrl, "myjetwallet-fees-assets", false);
-            var entities = await oldWriter.GetAsync();
-            Console.WriteLine(JsonConvert.SerializeObject(entities));
-
-            var newWriter = new MyNoSqlServerDataWriter<AssetFeesNoSqlEntity>(GetUrl, AssetFeesNoSqlEntity.TableName, false);
-            foreach (var entity in entities.Select(t => t.AssetFees))
-            {
-                entity.ProfileId = FeeProfileConsts.DefaultProfile;
-                await newWriter.InsertOrReplaceAsync(AssetFeesNoSqlEntity.Create(entity));
-            }
-            var newEntities = await newWriter.GetAsync();
-            Console.WriteLine(JsonConvert.SerializeObject(newEntities));
+            // var groupWriter = new MyNoSqlServerDataWriter<FeeProfilesNoSqlEntity>(GetUrl, FeeProfilesNoSqlEntity.TableName, false);
+            //
+            // var profiles = new List<string>();
+            // profiles.Add(FeeProfileConsts.DefaultProfile);
+            // await groupWriter.InsertOrReplaceAsync(FeeProfilesNoSqlEntity.Create(profiles));
+            //
+            // var oldWriter = new MyNoSqlServerDataWriter<AssetFeesNoSqlEntity>(GetUrl, "myjetwallet-fees-assets", false);
+            // var entities = await oldWriter.GetAsync();
+            // Console.WriteLine(JsonConvert.SerializeObject(entities));
+            //
+            // var newWriter = new MyNoSqlServerDataWriter<AssetFeesNoSqlEntity>(GetUrl, AssetFeesNoSqlEntity.TableName, false);
+            // foreach (var entity in entities.Select(t => t.AssetFees))
+            // {
+            //     entity.ProfileId = FeeProfileConsts.DefaultProfile;
+            //     await newWriter.InsertOrReplaceAsync(AssetFeesNoSqlEntity.Create(entity));
+            // }
+            // var newEntities = await newWriter.GetAsync();
+            // Console.WriteLine(JsonConvert.SerializeObject(newEntities));
         }
 
         
