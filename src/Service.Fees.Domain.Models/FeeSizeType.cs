@@ -6,6 +6,7 @@ namespace Service.Fees.Domain.Models
     public enum FeeSizeType
     {
         Percentage,
-        Absolute
+        Absolute,
+        Composite,
     }
 }

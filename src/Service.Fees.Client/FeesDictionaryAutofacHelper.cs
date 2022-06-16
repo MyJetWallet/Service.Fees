@@ -23,6 +23,12 @@ namespace Service.Fees.Client
                 SpotInstrumentFeesNoSqlEntity.TableName);
 
             builder
+                .RegisterInstance(new DepositFeesClient())
+                .As<IDepositFeesClient>()
+                .AutoActivate()
+                .SingleInstance();
+            
+            builder
                 .RegisterInstance(new AssetFeesClient(assetFees, feesSettings))
                 .As<IAssetFeesClient>()
                 .AutoActivate()
