@@ -23,6 +23,8 @@ namespace Service.Fees.Client.Grpc
 
         public IAssetFeesSettingsService GetAssetFeesSettingsService() =>
             _channel.CreateGrpcService<IAssetFeesSettingsService>();
+        public IDepositFeesSettingsService GetDepositFeesSettingsService() => 
+            _channel.CreateGrpcService<IDepositFeesSettingsService>();
 
         public ISpotInstrumentFeesSettingsService GetSpotInstrumentFeesSettingsService() =>
             _channel.CreateGrpcService<ISpotInstrumentFeesSettingsService>();

@@ -18,6 +18,8 @@ namespace Service.Fees.Client.Grpc
                 .As<ISpotInstrumentFeesSettingsService>().SingleInstance();
             builder.RegisterInstance(factory.GetGroupsService())
                 .As<IFeeProfileService>().SingleInstance();
+            builder.RegisterInstance(factory.GetDepositFeesSettingsService())
+                .As<IDepositFeesSettingsService>().SingleInstance();
         }
     }
 }
