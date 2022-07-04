@@ -6,6 +6,8 @@ namespace Service.Fees.Domain.Models
     {
         string BrokerId { get; }
         string AssetId { get; }
+
+        string AssetNetwork { get; }
         OperationType OperationType { get; }
         string ProfileId { get; }
 
@@ -31,12 +33,15 @@ namespace Service.Fees.Domain.Models
         [DataMember(Order = 9)] public string WalletId { get; set; }
         [DataMember(Order = 10)] public string ProfileId { get; set; }
 
+        [DataMember(Order = 11)] public string AssetNetwork { get; set; }
+
         public static AssetFees Create(IAssetFees assetFees)
         {
             return new AssetFees()
             {
                 BrokerId = assetFees.BrokerId,
                 AssetId = assetFees.AssetId,
+                AssetNetwork = assetFees.AssetNetwork,
                 OperationType = assetFees.OperationType,
                 FeeType = assetFees.FeeType,
                 FeeSizeType = assetFees.FeeSizeType,

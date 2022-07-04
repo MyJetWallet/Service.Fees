@@ -103,7 +103,7 @@ namespace Service.Fees.Services
                     JsonConvert.SerializeObject(request));
 
                 var entity = await _writer.DeleteAsync(AssetFeesNoSqlEntity.GeneratePartitionKey(request.BrokerId, request.ProfileId),
-                    AssetFeesNoSqlEntity.GenerateRowKey(request.AssetId, request.OperationType));
+                    AssetFeesNoSqlEntity.GenerateRowKey(request.AssetId, request.OperationType, request.AssetNetwork));
                 
                 if (entity != null)
                     _logger.LogInformation("Removed Asset Fees Settings: {jsonText}",
@@ -126,6 +126,8 @@ namespace Service.Fees.Services
             if (string.IsNullOrEmpty(settings.BrokerId)) throw new Exception("Cannot add settings with empty broker");
             if (string.IsNullOrEmpty(settings.ProfileId)) throw new Exception("Cannot add settings with empty profile");
             if (string.IsNullOrEmpty(settings.AssetId)) throw new Exception("Cannot add settings with empty asset");
+            if (string.IsNullOrEmpty(settings.AssetNetwork)) throw new Exception("Cannot add settings with empty network");
+
             if (settings.FeeSize < 0) throw new Exception("Cannot add settings with negative fee size");
         }
     }
