@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MyNoSqlServer.Abstractions;
 using MyNoSqlServer.DataReader;
 using Service.Fees.Domain.Models;
 using Service.Fees.MyNoSql;
@@ -14,7 +15,7 @@ namespace Service.Fees.Client
 
     public class DepositFeesClient : IDepositFeesClient
     {
-        private readonly MyNoSqlReadRepository<DepositFeesNoSqlEntity> _depositFeesReader;
+        private readonly IMyNoSqlServerDataReader<DepositFeesNoSqlEntity> _depositFeesReader;
 
         private readonly Dictionary<string, DepositFees> _mock = new Dictionary<string, DepositFees>()
         {
@@ -59,7 +60,7 @@ namespace Service.Fees.Client
             },
         };
 
-        public DepositFeesClient(MyNoSqlReadRepository<DepositFeesNoSqlEntity> depositFeesReader)
+        public DepositFeesClient(IMyNoSqlServerDataReader<DepositFeesNoSqlEntity> depositFeesReader)
         {
             _depositFeesReader = depositFeesReader;
         }

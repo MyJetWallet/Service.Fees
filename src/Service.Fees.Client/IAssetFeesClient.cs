@@ -1,4 +1,5 @@
-﻿using MyNoSqlServer.DataReader;
+﻿using MyNoSqlServer.Abstractions;
+using MyNoSqlServer.DataReader;
 using Service.Fees.Domain.Models;
 using Service.Fees.MyNoSql;
 using System;
@@ -17,12 +18,12 @@ namespace Service.Fees.Client
 
     public class AssetFeesClient : IAssetFeesClient
     {
-        private readonly MyNoSqlReadRepository<AssetFeesNoSqlEntity> _assetFeesReader;
-        private readonly MyNoSqlReadRepository<FeesSettingsNoSqlEntity> _feesSettingsReader;
+        private readonly IMyNoSqlServerDataReader<AssetFeesNoSqlEntity> _assetFeesReader;
+        private readonly IMyNoSqlServerDataReader<FeesSettingsNoSqlEntity> _feesSettingsReader;
 
 
-        public AssetFeesClient(MyNoSqlReadRepository<AssetFeesNoSqlEntity> assetFeesReader,
-            MyNoSqlReadRepository<FeesSettingsNoSqlEntity> feesSettingsReader)
+        public AssetFeesClient(IMyNoSqlServerDataReader<AssetFeesNoSqlEntity> assetFeesReader,
+            IMyNoSqlServerDataReader<FeesSettingsNoSqlEntity> feesSettingsReader)
         {
             _assetFeesReader = assetFeesReader;
             _feesSettingsReader = feesSettingsReader;

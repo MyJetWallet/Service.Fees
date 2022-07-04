@@ -1,4 +1,5 @@
-﻿using MyNoSqlServer.DataReader;
+﻿using MyNoSqlServer.Abstractions;
+using MyNoSqlServer.DataReader;
 using Service.Fees.Domain.Models;
 using Service.Fees.MyNoSql;
 
@@ -13,11 +14,11 @@ namespace Service.Fees.Client
 
     public class SpotInstrumentFeesClient : ISpotInstrumentFeesClient
     {
-        private readonly MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity> _spotInstrumentsReader;
-        private readonly MyNoSqlReadRepository<FeesSettingsNoSqlEntity> _feesSettingsReader;
+        private readonly IMyNoSqlServerDataReader<SpotInstrumentFeesNoSqlEntity> _spotInstrumentsReader;
+        private readonly IMyNoSqlServerDataReader<FeesSettingsNoSqlEntity> _feesSettingsReader;
 
-        public SpotInstrumentFeesClient(MyNoSqlReadRepository<SpotInstrumentFeesNoSqlEntity> spotInstrumentsReader,
-            MyNoSqlReadRepository<FeesSettingsNoSqlEntity> feesSettingsReader)
+        public SpotInstrumentFeesClient(IMyNoSqlServerDataReader<SpotInstrumentFeesNoSqlEntity> spotInstrumentsReader,
+            IMyNoSqlServerDataReader<FeesSettingsNoSqlEntity> feesSettingsReader)
         {
             _spotInstrumentsReader = spotInstrumentsReader;
             _feesSettingsReader = feesSettingsReader;
