@@ -76,9 +76,6 @@ namespace Service.Fees.Services
                 
                 var entity = AssetFeesNoSqlEntity.Create(settings);
 
-                var existingItem = await _writer.GetAsync(entity.PartitionKey, entity.RowKey);
-                if (existingItem == null) throw new Exception("Cannot update Asset Fees Settings. Do not exist");
-
                 await _writer.InsertOrReplaceAsync(entity);
                 
                 _logger.LogInformation("Updated Asset Fees Setting: {jsonText}",
