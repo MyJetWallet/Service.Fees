@@ -41,19 +41,19 @@ namespace Service.Fees.Services
             {
                 _logger.LogInformation("Add Asset Fees Setting: {jsonText}",
                     JsonConvert.SerializeObject(settings));
-                
+
                 ValidateSettings(settings);
-                
+
                 var entity = AssetFeesNoSqlEntity.Create(settings);
 
                 var existingItem = await _writer.GetAsync(entity.PartitionKey, entity.RowKey);
                 if (existingItem != null) throw new Exception("Cannot add Asset Fees Settings. Already exist");
 
                 await _writer.InsertAsync(entity);
-                
+
                 _logger.LogInformation("Added Asset Fees Setting: {jsonText}",
                     JsonConvert.SerializeObject(settings));
-            } 
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot add ExternalMarketSettings: {requestJson}",
@@ -71,16 +71,16 @@ namespace Service.Fees.Services
             {
                 _logger.LogInformation("Update Asset Fees Setting: {jsonText}",
                     JsonConvert.SerializeObject(settings));
-                
+
                 ValidateSettings(settings);
-                
+
                 var entity = AssetFeesNoSqlEntity.Create(settings);
 
                 await _writer.InsertOrReplaceAsync(entity);
-                
+
                 _logger.LogInformation("Updated Asset Fees Setting: {jsonText}",
                     JsonConvert.SerializeObject(settings));
-            } 
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot update ExternalMarketSettings: {requestJson}",
@@ -101,14 +101,23 @@ namespace Service.Fees.Services
 
                 var entity = await _writer.DeleteAsync(AssetFeesNoSqlEntity.GeneratePartitionKey(request.BrokerId, request.ProfileId),
                     AssetFeesNoSqlEntity.GenerateRowKey(request.AssetId, request.OperationType, request.AssetNetwork));
-                
+
                 if (entity != null)
                     _logger.LogInformation("Removed Asset Fees Settings: {jsonText}",
                         JsonConvert.SerializeObject(entity));
-                else 
-                    _logger.LogInformation("Unable to remove Asset Fees Setting, do not exist: {jsonText}",
-                        JsonConvert.SerializeObject(request));
-            } 
+                else
+                {
+                    entity = await _writer.DeleteAsync(AssetFeesNoSqlEntity.GeneratePartitionKey(request.BrokerId, request.ProfileId),
+                 AssetFeesNoSqlEntity.GenerateRowKeyLegacy(request.AssetId, request.OperationType));
+
+                    if (entity != null)
+                        _logger.LogInformation("Removed Asset Fees Settings: {jsonText}",
+                            JsonConvert.SerializeObject(entity));
+                    else
+                        _logger.LogInformation("Unable to remove Asset Fees Setting, do not exist: {jsonText}",
+                            JsonConvert.SerializeObject(request));
+                }
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot remove ExternalMarketSettings: {requestJson}",
