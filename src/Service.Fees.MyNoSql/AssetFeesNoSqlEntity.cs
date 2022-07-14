@@ -19,10 +19,13 @@ namespace Service.Fees.MyNoSql
 
         public static AssetFeesNoSqlEntity Create(AssetFees assetFees)
         {
+            var rowKey = !string.IsNullOrEmpty(assetFees.AssetNetwork) ?
+                GenerateRowKey(assetFees.AssetId, assetFees.OperationType, assetFees.AssetNetwork) :
+                GenerateRowKeyLegacy(assetFees.AssetId, assetFees.OperationType);
             return new AssetFeesNoSqlEntity()
             {
                 PartitionKey = GeneratePartitionKey(assetFees.BrokerId, assetFees.ProfileId),
-                RowKey = GenerateRowKey(assetFees.AssetId, assetFees.OperationType, assetFees.AssetNetwork),
+                RowKey = rowKey,
                 BrokerId = assetFees.BrokerId,
                 AssetId = assetFees.AssetId,
                 AssetNetwork = assetFees.AssetNetwork,
