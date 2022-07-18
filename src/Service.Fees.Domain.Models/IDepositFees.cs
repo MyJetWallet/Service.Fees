@@ -6,6 +6,7 @@ namespace Service.Fees.Domain.Models
     {
         string BrokerId { get; }
         string AssetId { get; }
+        string AssetNetwork { get; }
         string ProfileId { get; }
         FeeType FeeType { get; }
         FeeSizeType FeeSizeType { get; }
@@ -26,6 +27,8 @@ namespace Service.Fees.Domain.Models
         [DataMember(Order = 7)] public string FeeAssetId { get; set; }
         [DataMember(Order = 8)] public string ProfileId { get; set; }
 
+        [DataMember(Order = 9)] public string AssetNetwork { get; set; }
+
         public static DepositFees Create(IDepositFees assetFees)
         {
             return new DepositFees()
@@ -38,6 +41,7 @@ namespace Service.Fees.Domain.Models
                 FeeSizeRelative = assetFees.FeeSizeRelative,
                 FeeAssetId = assetFees.FeeAssetId,
                 ProfileId = assetFees.ProfileId,
+                AssetNetwork = assetFees.AssetNetwork,
             };
         }
     }

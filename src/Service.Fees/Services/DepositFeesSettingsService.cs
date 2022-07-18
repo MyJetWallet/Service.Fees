@@ -103,7 +103,7 @@ namespace Service.Fees.Services
                     JsonConvert.SerializeObject(request));
 
                 var entity = await _writer.DeleteAsync(DepositFeesNoSqlEntity.GeneratePartitionKey(request.BrokerId, request.ProfileId),
-                    DepositFeesNoSqlEntity.GenerateRowKey(request.AssetId));
+                    DepositFeesNoSqlEntity.GenerateRowKey(request.AssetId, request.AssetNetwork));
                 
                 if (entity != null)
                     _logger.LogInformation("Removed Deposit Fees Settings: {jsonText}",

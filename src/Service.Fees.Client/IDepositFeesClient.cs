@@ -10,7 +10,7 @@ namespace Service.Fees.Client
 {
     public interface IDepositFeesClient
     {
-        DepositFees GetDepositFees(string brokerId, string groupId,  string assetId);
+        DepositFees GetDepositFees(string brokerId,  string groupId,  string assetId, string assetNetwork);
     }
 
     public class DepositFeesClient : IDepositFeesClient
@@ -29,7 +29,8 @@ namespace Service.Fees.Client
                     FeeSizeAbsolute = 0,
                     FeeSizeRelative = 10,
                     FeeAssetId = "BTC",
-                    ProfileId = "DEFAULT"
+                    ProfileId = "DEFAULT",
+                    AssetNetwork = ""
                 }
             },
             {
@@ -42,7 +43,8 @@ namespace Service.Fees.Client
                     FeeSizeAbsolute = 1,
                     FeeSizeRelative = 0,
                     FeeAssetId = "USDC",
-                    ProfileId = "DEFAULT"
+                    ProfileId = "DEFAULT",
+                    AssetNetwork = ""
                 }
             },
             {
@@ -55,7 +57,8 @@ namespace Service.Fees.Client
                     FeeSizeAbsolute = 0.5m,
                     FeeSizeRelative = 3,
                     FeeAssetId = "USDT",
-                    ProfileId = "DEFAULT"
+                    ProfileId = "DEFAULT",
+                    AssetNetwork = ""
                 }
             },
         };
@@ -65,10 +68,10 @@ namespace Service.Fees.Client
             _depositFeesReader = depositFeesReader;
         }
 
-        public DepositFees GetDepositFees(string brokerId, string groupId, string assetId)
+        public DepositFees GetDepositFees(string brokerId, string groupId, string assetId, string assetNetwork)
         {
             var entity = _depositFeesReader.Get(DepositFeesNoSqlEntity.GeneratePartitionKey(brokerId, groupId),
-                 DepositFeesNoSqlEntity.GenerateRowKey(assetId));
+                 DepositFeesNoSqlEntity.GenerateRowKey(assetId, assetNetwork));
 
             if (entity == null)
             {
